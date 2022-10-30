@@ -16,4 +16,4 @@ Here's an overview on what to expect:
 
 ![3](https://user-images.githubusercontent.com/65423670/198865365-dcaf8dc4-2663-42da-888f-70d8c9b6fcee.png)
 
-![4](https://user-images.githubusercontent.com/65423670/198865366-bc530053-6076-4b24-a2ef-6f2748f3f0f5.png)
+![4](https://user-images.githubusercontent.com/65423670/198867446-c557353a-167c-4dd3-8a5d-8f8717263c6f.png)
