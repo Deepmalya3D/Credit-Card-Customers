@@ -6,7 +6,7 @@ As a part of my visualization project, I decided to work on Credit Card customer
 
 `Rmd` : [link](https://github.com/Deepmalya3D/Credit-Card-Customers/blob/main/src/Visualisation%20Project.Rmd)
 
-`R Shiny` dashboard link: To be added later.
+`R Shiny` : To be added later.
 
 Here's an overview on what to expect:
 
