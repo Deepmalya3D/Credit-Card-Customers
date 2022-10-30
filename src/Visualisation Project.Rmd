@@ -4,9 +4,9 @@ header-includes:
   \usepackage{fvextra}
   \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 output:
-  html_document: default
   pdf_document: 
     df_print: paged
+  html_document: default
   word_document: default
 urlcolor: blue
 ---
@@ -158,26 +158,26 @@ ggplot(data = df, aes(Total_Revolving_Bal)) + geom_histogram(aes(color = I('Blac
 
 
 ```{r, echo=F, warning=F}
-ggplot(data = df, aes(Education_Level, Avg_Utilization_Ratio, color = Education_Level)) + geom_boxplot(notch = T, varwidth = T) + geom_jitter(size = 0.1, position=position_jitter(0.3), alpha = I(0.2)) + xlab("Total Revolving Balance") + ylab("Count") + ggtitle("Utilization Ratio based on Education Level") + scale_color_discrete(name = "Educaion Level")
+ggplot(data = df, aes(Education_Level, Avg_Utilization_Ratio, color = Education_Level)) + geom_boxplot(notch = T, varwidth = T) + geom_jitter(size = 0.1, position=position_jitter(0.3), alpha = I(0.2)) + xlab("Total Revolving Balance") + ylab("Count") + ggtitle("Utilization Ratio based on Education Level") + scale_color_discrete(name = "Educaion Level") + theme(axis.text.x = element_text(angle = 315))
 
 ```
 
 > **Figure 2**: **Boxplot Representation.** We see that despite of having different education qualifications, the total revolving balance amount count is more or less same across different demographics. Also a large number of points are outliers.
 
-```{r, echo=F, warning=F}
-ggplot(data = df, aes(Credit_Limit, Avg_Utilization_Ratio)) + geom_point(aes(color = Card_Category), size = I(0.3)) + geom_smooth(color = I("Red"), size = I(0.3), method = 'gam', formula = 'y ~ s(x, bs = "cs")') + scale_color_manual(name = "Income Category", values=c('Blue'= 'Blue','Gold' = 'Yellow','Platinum' = 'Black','Silver' = 'Grey')) + xlab("Credit Limit") + ylab("Average Utilization Ratio") + ggtitle("Utilization Ratio and Credit Limit Scatterplot")
+```{r, echo=F, warning=F, message=F}
+ggplot(data = df, aes(Credit_Limit, Avg_Utilization_Ratio)) + geom_point(shape = 1, aes(color = Card_Category), size = I(0.1)) + geom_smooth(color = I("Red"), size = I(0.3), fill = NA) + scale_color_manual(name = "Income Category", values=c('Blue'= 'Blue','Gold' = 'Yellow','Platinum' = 'Black','Silver' = 'Grey')) + xlab("Credit Limit") + ylab("Average Utilization Ratio") + ggtitle("Utilization Ratio and Credit Limit Scatterplot")
 ```
 
 > **Figure 3**: **Scatterplot Representation.** Here we can see as the credit limit is increasing, the average utilization ratio is decreasing, in a logarithmic relation. That is the higher the credit limit, the less customers are using it. Also we see the line peaks at around 2500, which is the credit limit, where utilization peaks.
 
-```{r, echo=F, warning=F}
-ggplot(data = df, aes(Total_Trans_Amt, Total_Revolving_Bal)) + geom_point(aes(color = Income_Category), size = I(1)) + geom_smooth(method = 'gam', formula = 'y ~ s(x, bs = "cs")') + scale_color_discrete(name = "Income Category") + xlab("Total Transaction Amount") + ylab("Total Revolving Balance") + ggtitle("Transaction Amount and Revolving Balance Scatterplot")
+```{r, echo=F, warning=F, message=F}
+ggplot(data = df, aes(Total_Trans_Amt, Total_Revolving_Bal)) + geom_point(alpha = I(0.5), aes(color = Income_Category), size = I(0.5)) + geom_smooth(size = I(0.5)) + scale_color_discrete(name = "Income Category") + xlab("Total Transaction Amount") + ylab("Total Revolving Balance") + ggtitle("Transaction Amount and Revolving Balance Scatterplot")
 ```
 
 > **Figure 4**: **Scatterplot Representation.** We see the total transaction amount is clustered around 3 points and most these are in between 0 to 5000. Also no matter what the transaction amount is, the total revolving balance stays around the median, with large points at 0 and max.
 
-```{r, echo=F, warning=F}
-ggplot(data = df, aes(Total_Ct_Chng_Q4_Q1, Total_Amt_Chng_Q4_Q1)) + geom_point(size = I(0.2), aes(color = Card_Category)) + facet_grid(Card_Category~.) + geom_smooth(size = I(0.2), color = I('Black'), method = 'gam', formula = 'y ~ s(x, bs = "cs")') + scale_color_manual(name = "Card Category", values=c('Blue'= 'Blue','Gold' = 'Yellow','Platinum' = 'Black','Silver' = 'Grey')) + xlab("Change in Transaction Count") + ylab("Change in Transaction Amount") + ggtitle("Transaction Amount and Count accross different Card Categories")
+```{r, echo=F, warning=F, message=F}
+ggplot(data = df, aes(Total_Ct_Chng_Q4_Q1, Total_Amt_Chng_Q4_Q1)) + geom_point(shape = 1, alpha = I(0.5), size = I(0.2), aes(color = Card_Category)) + facet_grid(Card_Category~.) + geom_smooth(size = I(0.2), color = I('Black')) + scale_color_manual(name = "Card Category", values=c('Blue'= 'Blue','Gold' = 'Yellow','Platinum' = 'Black','Silver' = 'Grey')) + xlab("Change in Transaction Count") + ylab("Change in Transaction Amount") + ggtitle("Transaction Amount and Count accross different Card Categories")
 ```
 
 > **Figure 5**: We see that across different cards, the transaction amount is hardly effected by the number of transactions made by the users.
@@ -188,11 +188,11 @@ ggplot(data = df, aes(Total_Ct_Chng_Q4_Q1, Total_Amt_Chng_Q4_Q1)) + geom_point(s
 
 \vspace{0.3cm}
 
-1. The total revolving balance is centered around the median and it tends to a normal distribution. Also, most people like to keep a zero-revolving balance.
-2. Despite having different education qualifications, the total revolving balance amount is more or less the same across different demographics. So we can say, having different educational backgrounds doesn't affect one's financial nature.
-3. The credit card limit and utilization ratio are in a logarithmic relation. That is the higher the credit limit, the fewer customers are using it. Also from the graph, we notice the utilization ratio peaks at around 2500 credit limit, which says, having such a credit limit would benefit the card issuing company.
-4. No matter what the transaction amount is, the total revolving balance stays around the median, with large points at 0 and maximum. So we can say the total revolving balance is independent of the transaction amount.
-5. We also notice that the transaction amount is pretty independent of the number of transactions. So users who spend more on credit cards, don't necessarily use them more than others.
+- The total revolving balance is centered around the median and it tends to a normal distribution. Also, most people like to keep a zero-revolving balance.
+- Despite having different education qualifications, the total revolving balance amount is more or less the same across different demographics. So we can say, having different educational backgrounds doesn't affect one's financial nature.
+- The credit card limit and utilization ratio are in a logarithmic relation. That is the higher the credit limit, the fewer customers are using it. Also from the graph, we notice the utilization ratio peaks at around 2500 credit limit, which says, having such a credit limit would benefit the card issuing company.
+- No matter what the transaction amount is, the total revolving balance stays around the median, with large points at 0 and maximum. So we can say the total revolving balance is independent of the transaction amount.
+- We also notice that the transaction amount is pretty independent of the number of transactions. So users who spend more on credit cards, don't necessarily use them more than others.
 
 \vspace{1cm}
 
