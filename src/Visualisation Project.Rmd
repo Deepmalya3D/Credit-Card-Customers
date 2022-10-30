@@ -1,0 +1,212 @@
+---
+title: '**Visualization Project**'
+header-includes:
+  \usepackage{fvextra}
+  \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+output:
+  html_document: default
+  pdf_document: 
+    df_print: paged
+  word_document: default
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(gridExtra)
+library(MASS)
+set.seed(1000)
+```
+
+
+\begin{centering}
+
+\LARGE
+{\bf Credit Card Customers}
+
+\vspace{1cm}
+
+\Large
+Deepmalya Dutta
+
+\vspace{0.3cm}
+
+\large
+Roll No: MDS202218
+
+\large
+DG1107: Visualization
+
+\large
+Email: \href{mailto:deepmalya@cmi.ac.in}{deepmalya@cmi.ac.in}
+
+\large
+Chennai Mathematical Institute
+
+\normalsize
+30-10-2022
+
+\end{centering}
+
+\newpage
+
+\begin{centering}
+
+\vspace*{1cm}
+
+\Large
+\textbf {Abstract}
+
+\end{centering}
+
+\vspace{0.3cm}
+
+\ \ \ A credit card is a payment card issued to users to enable the cardholder to pay a merchant for goods and services based on the cardholder's accrued debt. In today's digital age, it has become an intergate part of day-to-day transactions and money exchange. In this project, we explore the trend and usage of credit card users among different demographics. We use visualization techniques in R to find patterns in the credit card usage dataset and following this, we attempt to find relations between Credit Card Usage, Utilization, Revolving Balance, and other variables. Finally, we develop a dashboard to address the above-posed questions.
+
+**Keywords** : Credit Card, R, Ggplot2, Visualization.
+
+\vspace{1cm}
+
+\newpage
+
+\vspace*{1cm}
+
+\renewcommand{\contentsname}{Table of Contents}
+
+\renewcommand{\baselinestretch}{2.0}\normalsize
+\tableofcontents
+\renewcommand{\baselinestretch}{1.0}\normalsize
+
+\newpage
+
+
+## 1. *Introduction:*
+
+\vspace{0.3cm}
+
+\ \ \ A credit card is a thin rectangular piece of plastic or metal issued by a bank or financial services company that allows cardholders to borrow funds with which to pay for goods and services with merchants that accept cards for payment. Credit cards impose the condition that cardholders pay back the borrowed money, plus any applicable interest, as well as any additional agreed-upon charges, either in full by the billing date or over time. It works like a loan, but instead of receiving money beforehand, you get a set credit limit on the card. the issuing authority sets a credit limit on the amount that can be spent before you have to pay back a specified amount to the lender at the end of the month.  
+Credit cards come with some benefits:
+
+- You can use a credit card to make a large purchase which can be repaid in smaller installments over some time
+- A credit card is relatively safer to carry as against cash and is accepted mostly everywhere
+- If you have a good credit score, you can avail of additional cash back, lower interest rates, and many more exciting offers
+
+\ \ \ Having such benefits, the usage of credit cards is increasing in the modern age. In this project, we want to analyze the credit card user base and attempt to find different trends.
+
+\vspace{1cm}
+
+## 2. *DataSet Description:*
+
+\vspace{0.3cm}
+
+\ \ \ This data set consists of 10,000 customers mentioning their age, salary, marital status, credit card limit, credit card category, etc. There are nearly 18 features. The data is sourced from \hyperlink{ID1}{[1]}.
+
+- **CLIENTNUM** : Client number. An unique identifier for the customer holding the account
+- **Attrition_Flag** : If the account is closed then 1 else 0 - Customer activity variable
+- **Customer_Age** : Customer's Age in Years - Demographic variable
+- **Gender** : M = Male, F = Female - Demographic variable
+- **Dependent_count** : Number of dependents - Demographic variable
+- **Education_Level** : Educational Qualification of the account holder (example: high school, college graduate, etc) - Demographic variable
+- **Marital_Status** : Married, Single, Divorced, Unknown - Demographic variable
+- **Income_Category** : Annual Income Category of the account holder (< $40K, $40K - 60K, $60K - $80K, $80K-$120K, > $120K) - Demographic variable
+- **Card_Category** : Type of Card (Blue, Silver, Gold, Platinum) - Product Variable
+- **Months_on_book** : Period of relationship with bank
+- **Total_Relationship_Count** : Total no. of products held by the customer
+- **Months_Inactive_12_Mon** : No. of months inactive in the last 12 months
+- **Contacts_Count_12_Mon** : No. of Contacts in the last 12 months
+- **Credit_Limit** : Credit Limit on the Credit Card
+- **Total_Revolving_Bal** : Total Revolving Balance on the Credit Card
+- **Avg_Open_To_Buy** : Open to Buy Credit Line (Average of last 12 months)
+- **Total_Amt_Chng_Q4_Q1** : Change in Transaction Amount (Quarter 4 over Quarter 1)
+- **Total_Trans_Amt** : Total Transaction Amount (Last 12 months)
+- **Total_Trans_Ct** : Total Transaction Count (Last 12 months)
+- **Total_Ct_Chng_Q4_Q1** : Change in Transaction Count (Quarter 4 over Quarter 1)
+- **Avg_Utilization_Ratio** : Average Card Utilization Ratio.
+
+\vspace{1cm}
+
+## 3. *Objectives:*
+
+\vspace{0.3cm}
+
+Using the above dataset, we are trying to determine the following:
+
+- How transaction amount, limit, revolving balance, and utilization are dependent on different demographics
+- How different income groups spend their money on credit card transactions
+- How changing card limit affects things
+- How does having more revolving balance effects transactions
+- Which groups should the card companies target to increase their business
+
+\ \ \ The above objectives can be achieved using histograms, piechart and boxplots for univariate analysis, scatter plots and line plots for bivariate analysis, and gradient scatter plots for multivariate analysis.
+
+\vspace{1cm}
+
+## 4. *Graphical presentation of Key variables:*
+
+\vspace{0.3cm}
+
+```{r, echo= F}
+df <- read.csv("/home/deepmalya/Documents/College/Assignments/R/Visualisation/Project/BankChurners.csv")
+```
+
+```{r, echo=F, warning=F}
+ggplot(data = df, aes(Total_Revolving_Bal)) + geom_histogram(aes(color = I('Black'), fill = Income_Category), bins = 30) + geom_freqpoly(bins = 30, color = 'Black')+ xlab("Total Revolving Balance") + ylab("Count") + facet_wrap(.~Income_Category, ncol = 3) + ggtitle("Total Revolving Balance based on Income Category") + scale_fill_discrete(name = "Income Category")
+```
+
+> **Figure 1**: **Histogram Representation.** We see that for all the income categories, total revolving balance is centered around the median and at 0 it's at peak, that is most accounts have no total revolving balance.
+
+
+```{r, echo=F, warning=F}
+ggplot(data = df, aes(Education_Level, Avg_Utilization_Ratio, color = Education_Level)) + geom_boxplot(notch = T, varwidth = T) + geom_jitter(size = 0.1, position=position_jitter(0.3), alpha = I(0.2)) + xlab("Total Revolving Balance") + ylab("Count") + ggtitle("Utilization Ratio based on Education Level") + scale_color_discrete(name = "Educaion Level")
+
+```
+
+> **Figure 2**: **Boxplot Representation.** We see that despite of having different education qualifications, the total revolving balance amount count is more or less same across different demographics. Also a large number of points are outliers.
+
+```{r, echo=F, warning=F}
+ggplot(data = df, aes(Credit_Limit, Avg_Utilization_Ratio)) + geom_point(aes(color = Card_Category), size = I(0.3)) + geom_smooth(color = I("Red"), size = I(0.3), method = 'gam', formula = 'y ~ s(x, bs = "cs")') + scale_color_manual(name = "Income Category", values=c('Blue'= 'Blue','Gold' = 'Yellow','Platinum' = 'Black','Silver' = 'Grey')) + xlab("Credit Limit") + ylab("Average Utilization Ratio") + ggtitle("Utilization Ratio and Credit Limit Scatterplot")
+```
+
+> **Figure 3**: **Scatterplot Representation.** Here we can see as the credit limit is increasing, the average utilization ratio is decreasing, in a logarithmic relation. That is the higher the credit limit, the less customers are using it. Also we see the line peaks at around 2500, which is the credit limit, where utilization peaks.
+
+```{r, echo=F, warning=F}
+ggplot(data = df, aes(Total_Trans_Amt, Total_Revolving_Bal)) + geom_point(aes(color = Income_Category), size = I(1)) + geom_smooth(method = 'gam', formula = 'y ~ s(x, bs = "cs")') + scale_color_discrete(name = "Income Category") + xlab("Total Transaction Amount") + ylab("Total Revolving Balance") + ggtitle("Transaction Amount and Revolving Balance Scatterplot")
+```
+
+> **Figure 4**: **Scatterplot Representation.** We see the total transaction amount is clustered around 3 points and most these are in between 0 to 5000. Also no matter what the transaction amount is, the total revolving balance stays around the median, with large points at 0 and max.
+
+```{r, echo=F, warning=F}
+ggplot(data = df, aes(Total_Ct_Chng_Q4_Q1, Total_Amt_Chng_Q4_Q1)) + geom_point(size = I(0.2), aes(color = Card_Category)) + facet_grid(Card_Category~.) + geom_smooth(size = I(0.2), color = I('Black'), method = 'gam', formula = 'y ~ s(x, bs = "cs")') + scale_color_manual(name = "Card Category", values=c('Blue'= 'Blue','Gold' = 'Yellow','Platinum' = 'Black','Silver' = 'Grey')) + xlab("Change in Transaction Count") + ylab("Change in Transaction Amount") + ggtitle("Transaction Amount and Count accross different Card Categories")
+```
+
+> **Figure 5**: We see that across different cards, the transaction amount is hardly effected by the number of transactions made by the users.
+
+\newpage
+
+## 5. *Summary of Analysis:*
+
+\vspace{0.3cm}
+
+1. The total revolving balance is centered around the median and it tends to a normal distribution. Also, most people like to keep a zero-revolving balance.
+2. Despite having different education qualifications, the total revolving balance amount is more or less the same across different demographics. So we can say, having different educational backgrounds doesn't affect one's financial nature.
+3. The credit card limit and utilization ratio are in a logarithmic relation. That is the higher the credit limit, the fewer customers are using it. Also from the graph, we notice the utilization ratio peaks at around 2500 credit limit, which says, having such a credit limit would benefit the card issuing company.
+4. No matter what the transaction amount is, the total revolving balance stays around the median, with large points at 0 and maximum. So we can say the total revolving balance is independent of the transaction amount.
+5. We also notice that the transaction amount is pretty independent of the number of transactions. So users who spend more on credit cards, don't necessarily use them more than others.
+
+\vspace{1cm}
+
+## 6. *Conclusion*
+
+\vspace{0.3cm}
+
+
+
+\ \ \ In this project, we try to establish correlations between different variables in the dataset and how they are dependent on different demographics. We see how changing credit limit decreases the total utilization ratio, and how the transaction amount is independent of the transaction count. Though our analysis still is not completed we can conclude, having mid salary level, and lower credit card limit causes users to spend more on credit card transactions. Also, the spending is independent of most of the demographics discussed here. Now since the data has been collected from a single card company and a single city, there is obviously some bias to it. We will try to explore these biases and analyze these questions later in our dashboard.
+
+\vspace{1cm}
+
+## *References:*
+
+\ \ \ \hypertarget{ID1}{[1]} Credit Card customers - SAKSHI GOYAL.  
+URL: <https://www.kaggle.com/datasets/sakshigoyal7/credit-card-customers>
