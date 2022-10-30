@@ -1,5 +1,13 @@
 # Credit Card Customers
 
+As a part of my visualization project, I decided to work on Credit Card customer-base dataset. A credit card is a payment card issued to users to enable the cardholder to pay a merchant for goods and services based on the cardholder’s accrued debt. In today’s digital age, it has become an intergate part of day-to-day transactions and money exchange. In this project, we explore the trend and usage of credit card users among different demographics. We use visualization techniques in R to find patterns in the credit card usage dataset and following this, we attempt to find relations between Credit Card Usage, Utilization, Revolving Balance, and other variables. Finally, we develop a dashboard to address the above-posed questions.
+
+`Report`: [link](https://github.com/Deepmalya3D/Credit-Card-Customers/blob/main/doc/Visualisation-Project.pdf)
+
+`Rmd` : [link](https://github.com/Deepmalya3D/Credit-Card-Customers/blob/main/src/Visualisation%20Project.Rmd)
+
+`R Shiny` dashboard link: To be added later.
+
 Here's an overview on what to expect:
 
 ![1](https://user-images.githubusercontent.com/65423670/198865359-74b9c038-fefa-49c7-97aa-2d8296d92016.png)
